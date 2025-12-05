@@ -17,7 +17,22 @@ git clone https://github.com/nagaraj556534/Quotex_Trading.git
 cd Quotex_Trading
 ```
 
-## Step 2: Install Python 3.12 and Dependencies
+## Step 2: Install Google Chrome
+
+The bot uses a browser to log in securely. You must install Google Chrome.
+
+```bash
+# Download Google Chrome
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+# Install it
+sudo apt install ./google-chrome-stable_current_amd64.deb -y
+
+# Verify installation
+google-chrome --version
+```
+
+## Step 3: Install Python 3.12 and Dependencies
 
 The trading library requires **Python 3.12** or higher. Ubuntu 22.04 comes with Python 3.10, so we need to install the newer version.
 
