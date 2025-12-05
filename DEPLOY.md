@@ -17,17 +17,23 @@ git clone https://github.com/nagaraj556534/Quotex_Trading.git
 cd Quotex_Trading
 ```
 
-## Step 2: Install Dependencies
+## Step 2: Install Python 3.12 and Dependencies
 
-It is recommended to use a virtual environment.
+The trading library requires **Python 3.12** or higher. Ubuntu 22.04 comes with Python 3.10, so we need to install the newer version.
 
 ```bash
-# Install pip and venv if not already installed
+# Add the deadsnakes PPA to get newer Python versions
+sudo add-apt-repository ppa:deadsnakes/ppa -y
 sudo apt update
-sudo apt install python3-pip python3-venv -y
 
-# Create a virtual environment
-python3 -m venv .venv
+# Install Python 3.12 and venv
+sudo apt install python3.12 python3.12-venv -y
+
+# Remove old virtual environment if it exists
+rm -rf .venv
+
+# Create a virtual environment using Python 3.12
+python3.12 -m venv .venv
 
 # Activate the virtual environment
 source .venv/bin/activate
