@@ -1268,7 +1268,7 @@ async def _hard_recover_broker(qx) -> None:
     shallow authenticate-only reconnect to ensure a clean state.
     """
     try:
-        from pyquotex import global_value as _gv  # type: ignore
+        from quotexpy import global_value as _gv  # type: ignore
         # Close existing WS if any and start a fresh one + SSID
         try:
             # This path resets WS and sends SSID (unlike stable_api.reconnect)
@@ -2324,14 +2324,17 @@ async def main():
     print(BANNER)
 
     try:
-        from pyquotex.stable_api import Quotex
-    except Exception as e:
-        print(f"pyquotex not installed or import failed: {e}")
-        sys.exit(1)
+        from quotexpy.stable_api import Quotex
+    except ImportError:
+        try:
+            from quotexpy import Quotex
+        except Exception as e:
+            print(f"quotexpy not installed or import failed: {e}")
+            sys.exit(1)
 
     # Use saved credentials from pyquotex settings/config.ini when available (prompts once on first run)
     try:
-        from pyquotex.config import credentials as qx_credentials
+        from quotexpy.config import credentials as qx_credentials
     except Exception:
         qx_credentials = None
 
