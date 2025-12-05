@@ -2371,7 +2371,7 @@ async def main():
     account_mode = prompt_account_type()
 
     qx = Quotex(email=email, password=password, lang="en")
-    qx.set_account_mode(account_mode)
+    # qx.set_account_mode(account_mode) - Removed, using change_account after connect
 
     print("\nConnecting to Quotex...")
     ok, reason = await qx.connect()
@@ -2386,6 +2386,15 @@ async def main():
     if not ok:
         print(Fore.RED + f"Connection failed: {reason}" + Style.RESET_ALL)
         sys.exit(2)
+
+    # Set account mode after successful connection
+    target_mode = "PRACTICE" if account_mode.lower() == "demo" else "REAL"
+    try:
+        await qx.change_account(target_mode)
+        print(f"Switched to {target_mode} account.")
+    except Exception as e:
+        print(f"Failed to switch account mode: {e}")
+        sys.exit(1)
     
     # Save session after successful connection
     _save_session(qx)
