@@ -2370,7 +2370,7 @@ async def main():
 
     account_mode = prompt_account_type()
 
-    qx = Quotex(email=email, password=password, lang="en")
+    qx = Quotex(email=email, password=password, lang="en", headless=False)
     # qx.set_account_mode(account_mode) - Removed, using change_account after connect
 
     print("\nConnecting to Quotex...")

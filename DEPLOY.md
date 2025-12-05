@@ -119,21 +119,26 @@ Content:
 {}
 ```
 
-## Step 4: Run the Bot
+## Step 4: Install Xvfb (Virtual Display)
 
-Ensure your virtual environment is active (`source .venv/bin/activate`), then run:
+Since we need to run the browser in "headed" mode (visible) to bypass Cloudflare, but you are on a server without a monitor, you need a virtual display.
 
 ```bash
-python app/main.py
+sudo apt install xvfb -y
 ```
 
-## Running in Background (Optional)
+## Step 5: Run the Bot
 
-To keep the bot running after you disconnect, use `nohup` or `screen`.
+Use `xvfb-run` to start the bot with a virtual display:
 
-**Using nohup:**
 ```bash
-nohup python app/main.py > bot.log 2>&1 &
+xvfb-run -a python app/main.py
+```
+
+## Running in Background
+
+```bash
+xvfb-run -a nohup python app/main.py > bot.log 2>&1 &
 ```
 
 **Using screen:**
