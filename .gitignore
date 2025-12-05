@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+.venv/
+.vscode/
+Telegram Desktop/
+artifacts/
+*.session
+*.json
+*.csv
+*.log
+saved_credentials.json
+user_config.py
+settings/config.ini
+*.exe
+*.dll
+*.pkg
+*.dat
+*.bin
+*.zip
+*.tar.gz
+node_modules/
