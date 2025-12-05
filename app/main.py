@@ -1268,7 +1268,7 @@ async def _hard_recover_broker(qx) -> None:
     shallow authenticate-only reconnect to ensure a clean state.
     """
     try:
-        from quotexpy import global_value as _gv  # type: ignore
+        from pyquotex import global_value as _gv  # type: ignore
         # Close existing WS if any and start a fresh one + SSID
         try:
             # This path resets WS and sends SSID (unlike stable_api.reconnect)
@@ -2324,17 +2324,14 @@ async def main():
     print(BANNER)
 
     try:
-        from quotexpy.stable_api import Quotex
-    except ImportError:
-        try:
-            from quotexpy import Quotex
-        except Exception as e:
-            print(f"quotexpy not installed or import failed: {e}")
-            sys.exit(1)
+        from pyquotex.stable_api import Quotex
+    except Exception as e:
+        print(f"pyquotex not installed or import failed: {e}")
+        sys.exit(1)
 
     # Use saved credentials from pyquotex settings/config.ini when available (prompts once on first run)
     try:
-        from quotexpy.config import credentials as qx_credentials
+        from pyquotex.config import credentials as qx_credentials
     except Exception:
         qx_credentials = None
 
@@ -2370,8 +2367,8 @@ async def main():
 
     account_mode = prompt_account_type()
 
-    qx = Quotex(email=email, password=password, lang="en", headless=False)
-    # qx.set_account_mode(account_mode) - Removed, using change_account after connect
+    qx = Quotex(email=email, password=password, lang="en")
+    qx.set_account_mode(account_mode)
 
     print("\nConnecting to Quotex...")
     ok, reason = await qx.connect()
@@ -2386,15 +2383,6 @@ async def main():
     if not ok:
         print(Fore.RED + f"Connection failed: {reason}" + Style.RESET_ALL)
         sys.exit(2)
-
-    # Set account mode after successful connection
-    target_mode = "PRACTICE" if account_mode.lower() == "demo" else "REAL"
-    try:
-        await qx.change_account(target_mode)
-        print(f"Switched to {target_mode} account.")
-    except Exception as e:
-        print(f"Failed to switch account mode: {e}")
-        sys.exit(1)
     
     # Save session after successful connection
     _save_session(qx)
